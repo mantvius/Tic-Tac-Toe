@@ -154,7 +154,7 @@ def play_game(mc_move_function, ntrials, reverse = False):
     board = TTTBoard(3, reverse)
     curplayer = PLAYERX
     winner = None
-    print "poc-provided initialised board"
+    print "poc-provided initialised the board"
     print board
     
     # Run game
