@@ -8,7 +8,7 @@ import poc_ttt_provided as provided
 
 # Constants for Monte Carlo simulator
 # You may change the values of these constants as desired, but do not change their names.
-NTRIALS = 5          # Number of trials to run
+NTRIALS = 800        # Number of trials to run
 SCORE_CURRENT = 2.0  # Score for squares played by the current player
 SCORE_OTHER = 1.0    # Score for squares played by the other player
     
@@ -20,15 +20,10 @@ def mc_trial(board, player):
     The function should return when the game is over. The modified board will contain the state of the game,
     so the function does not return anything. In other words, the function should modify the board input.
     """
-    print "mc_trial got board"
-    print board
     while board.check_win() is None:
         square = random.choice(board.get_empty_squares())
         board.move(square[0], square[1], player)
         player = provided.switch_player(player)
-    print "mc_trial released board"
-    print board
-    print "result", board.check_win()
     return
 
 
@@ -40,7 +35,6 @@ def mc_update_scores(scores, board, player):
     As the function updates the scores grid directly, it does not return anything,
     """
     if board.check_win() == provided.DRAW:
-        print "draw"
         return
     elif board.check_win() == player:
         for dummy_row in range(board.get_dim()):
@@ -65,13 +59,8 @@ def get_best_move(board, scores):
     It is an error to call this function with a board that has no empty squares (there is no possible next move),
     so your function may do whatever it wants in that case. The case where the board is full will not be tested.
     """
-    max_score = -board.get_dim()*3
-    print "max_score", max_score
-    print "board before best move"
-    print board
-    print "scores before best move", scores
+    max_score = -float("inf")
     list_empty_squares = board.get_empty_squares()
-    print "list_empty_squares", list_empty_squares
     list_max_scores = []
     for empty_square in list_empty_squares:
         if scores[empty_square[0]][empty_square[1]] > max_score:
@@ -79,7 +68,6 @@ def get_best_move(board, scores):
             max_score = scores[empty_square[0]][empty_square[1]]
         elif scores[empty_square[0]][empty_square[1]] == max_score:
             list_max_scores.append(empty_square)
-    print "list_max_scores", list_max_scores
     return random.choice(list_max_scores)
 
 
@@ -91,22 +79,16 @@ def mc_move(board, player, trials):
     """
 
     sum_scores = [[0 for dummy_col in range(board.get_dim())] for dummy_row in range(board.get_dim())]
-    print "mc_move got board"
-    print board
     cur_board = board.clone()
     for dummy in range(trials):
         board = cur_board.clone()
         mc_trial(board, provided.PLAYERX)
         grid_scores = [[0 for dummy_col in range(board.get_dim())] for dummy_row in range(board.get_dim())]
-        print "grid_scores before", grid_scores
         mc_update_scores(grid_scores, board, player)
-        print "grid_scores after", grid_scores
 
         for dummy_row in range(board.get_dim()):
             for dummy_col in range(board.get_dim()):
                 sum_scores[dummy_row][dummy_col] += grid_scores[dummy_row][dummy_col]
-
-        print "sum_scores", sum_scores
 
     board = cur_board.clone()
 
