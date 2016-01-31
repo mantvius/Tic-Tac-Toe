@@ -34,22 +34,24 @@ def mc_update_scores(scores, board, player):
     The function should score the completed board and update the scores grid.
     As the function updates the scores grid directly, it does not return anything,
     """
-    if board.check_win() == provided.DRAW:
-        return
-    elif board.check_win() == player:
+    grid_scores = [[0 for dummy_col in range(board.get_dim())] for dummy_row in range(board.get_dim())]
+    if board.check_win() == player:
         for dummy_row in range(board.get_dim()):
             for dummy_col in range(board.get_dim()):
                 if board.square(dummy_row, dummy_col) == player:
-                    scores[dummy_row][dummy_col] = SCORE_CURRENT
+                    grid_scores[dummy_row][dummy_col] = SCORE_CURRENT
                 elif board.square(dummy_row, dummy_col) == provided.switch_player(player):
-                    scores[dummy_row][dummy_col] = -SCORE_OTHER
+                    grid_scores[dummy_row][dummy_col] = -SCORE_OTHER
     elif board.check_win() == provided.switch_player(player):
         for dummy_row in range(board.get_dim()):
             for dummy_col in range(board.get_dim()):
                 if board.square(dummy_row, dummy_col) == player:
-                    scores[dummy_row][dummy_col] = -SCORE_CURRENT
+                    grid_scores[dummy_row][dummy_col] = -SCORE_CURRENT
                 elif board.square(dummy_row, dummy_col) == provided.switch_player(player):
-                    scores[dummy_row][dummy_col] = SCORE_OTHER
+                    grid_scores[dummy_row][dummy_col] = SCORE_OTHER
+    for dummy_row in range(board.get_dim()):
+        for dummy_col in range(board.get_dim()):
+            scores[dummy_row][dummy_col] += grid_scores[dummy_row][dummy_col]
 
 
 def get_best_move(board, scores):
@@ -83,12 +85,7 @@ def mc_move(board, player, trials):
     for dummy in range(trials):
         board = cur_board.clone()
         mc_trial(board, provided.PLAYERX)
-        grid_scores = [[0 for dummy_col in range(board.get_dim())] for dummy_row in range(board.get_dim())]
-        mc_update_scores(grid_scores, board, player)
-
-        for dummy_row in range(board.get_dim()):
-            for dummy_col in range(board.get_dim()):
-                sum_scores[dummy_row][dummy_col] += grid_scores[dummy_row][dummy_col]
+        mc_update_scores(sum_scores, board, player)
 
     board = cur_board.clone()
 
@@ -100,7 +97,7 @@ def mc_move(board, player, trials):
 # board = provided.TTTBoard(3, False)
 # mc_move(board, provided.PLAYERX, NTRIALS)
 
-# provided.play_game(mc_move, NTRIALS, False)
+provided.play_game(mc_move, NTRIALS, False)
 # poc_ttt_gui.run_gui(3, provided.PLAYERX, mc_move, NTRIALS, False)
 
 
