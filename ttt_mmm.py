@@ -3,14 +3,14 @@ Monte Carlo Tic-Tac-Toe Player
 """
 
 import random
-# import poc_ttt_gui
+import poc_ttt_gui
 import poc_ttt_provided as provided
 
 # Constants for Monte Carlo simulator
 # You may change the values of these constants as desired, but do not change their names.
-NTRIALS = 800        # Number of trials to run
+NTRIALS = 10000       # Number of trials to run
 SCORE_CURRENT = 2.0  # Score for squares played by the current player
-SCORE_OTHER = 1.0    # Score for squares played by the other player
+SCORE_OTHER = 1.0   # Score for squares played by the other player
     
 
 def mc_trial(board, player):
@@ -106,3 +106,18 @@ def mc_move(board, player, trials):
 
 # Test game with the console or the GUI. Uncomment whichever you prefer.
 # Both should be commented out when you submit for testing to save time.
+
+# [-16.0 pts] mc_update_scores(
+# [[1.0, -3.0, 2.0], [4.5, -1.5, 2.75], [-8.1999999999999993, 3.7000000000000002, 4.4000000000000004]],
+# provided.TTTBoard(3, False, [[provided.PLAYERX, provided.PLAYERX, provided.PLAYERO], [provided.PLAYERO,
+# provided.PLAYERX, provided.EMPTY],[provided.EMPTY, provided.PLAYERX, provided.PLAYERO]]), 2)
+# expected [[3.0, -1.0, 1.0], [3.5, 0.5, 2.75], [-8.1999999999999993, 5.7000000000000002, 3.4000000000000004]]
+# but received [[2.0, 2.0, -1.0], [-1.0, 2.0, 2.75], [-8.1999999999999993, 2.0, -1.0]]
+
+# [-16.0 pts] mc_update_scores(
+# [[1.0, -3.0, 2.0], [4.5, -1.5, 2.75], [-8.1999999999999993, 3.7000000000000002, 4.4000000000000004]],
+# provided.TTTBoard(3, False, [[provided.PLAYERX, provided.PLAYERX, provided.PLAYERO], [provided.PLAYERO,
+# provided.PLAYERX, provided.EMPTY], [provided.EMPTY, provided.PLAYERX, provided.PLAYERO]]), 2)
+# expected [[3.0, -1.0, 1.0], [3.5, 0.5, 2.75], [-8.1999999999999993, 5.7000000000000002, 3.4000000000000004]]
+# but received [[2, 2, -1], [-1, 2, 2.75], [-8.1999999999999993, 2, -1]]
+
