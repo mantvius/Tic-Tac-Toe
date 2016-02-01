@@ -3,7 +3,7 @@ Monte Carlo Tic-Tac-Toe Player
 """
 
 import random
-import poc_ttt_gui
+# import poc_ttt_gui
 import poc_ttt_provided as provided
 
 # Constants for Monte Carlo simulator
@@ -84,7 +84,7 @@ def mc_move(board, player, trials):
     cur_board = board.clone()
     for dummy in range(trials):
         board = cur_board.clone()
-        mc_trial(board, provided.PLAYERX)
+        mc_trial(board, player)
         mc_update_scores(sum_scores, board, player)
 
     board = cur_board.clone()
@@ -97,24 +97,6 @@ def mc_move(board, player, trials):
 # board = provided.TTTBoard(3, False)
 # mc_move(board, provided.PLAYERX, NTRIALS)
 
-provided.play_game(mc_move, NTRIALS, False)
+# provided.play_game(mc_move, NTRIALS, False)
 # poc_ttt_gui.run_gui(3, provided.PLAYERX, mc_move, NTRIALS, False)
-
-
-# Test game with the console or the GUI. Uncomment whichever you prefer.
-# Both should be commented out when you submit for testing to save time.
-
-# [-16.0 pts] mc_update_scores(
-# [[1.0, -3.0, 2.0], [4.5, -1.5, 2.75], [-8.1999999999999993, 3.7000000000000002, 4.4000000000000004]],
-# provided.TTTBoard(3, False, [[provided.PLAYERX, provided.PLAYERX, provided.PLAYERO], [provided.PLAYERO,
-# provided.PLAYERX, provided.EMPTY],[provided.EMPTY, provided.PLAYERX, provided.PLAYERO]]), 2)
-# expected [[3.0, -1.0, 1.0], [3.5, 0.5, 2.75], [-8.1999999999999993, 5.7000000000000002, 3.4000000000000004]]
-# but received [[2.0, 2.0, -1.0], [-1.0, 2.0, 2.75], [-8.1999999999999993, 2.0, -1.0]]
-
-# [-16.0 pts] mc_update_scores(
-# [[1.0, -3.0, 2.0], [4.5, -1.5, 2.75], [-8.1999999999999993, 3.7000000000000002, 4.4000000000000004]],
-# provided.TTTBoard(3, False, [[provided.PLAYERX, provided.PLAYERX, provided.PLAYERO], [provided.PLAYERO,
-# provided.PLAYERX, provided.EMPTY], [provided.EMPTY, provided.PLAYERX, provided.PLAYERO]]), 2)
-# expected [[3.0, -1.0, 1.0], [3.5, 0.5, 2.75], [-8.1999999999999993, 5.7000000000000002, 3.4000000000000004]]
-# but received [[2, 2, -1], [-1, 2, 2.75], [-8.1999999999999993, 2, -1]]
 
